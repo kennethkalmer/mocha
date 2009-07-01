@@ -291,6 +291,8 @@ module Mocha # :nodoc:
     #   object = mock()
     #   object.expects(:expected_method).raises(Exception, 'message')
     #   object.expected_method # => raises exception of class Exception and with message 'message'
+    #   object.expects(:expected_method).raises(Exception, 'message', 'additional', 'args')
+    #   object.expected_method # => raises exception of class Exception and passes all the arguments to the exception initializer.
     # May be called multiple times on the same expectation. Also see Expectation#then.
     #   object = mock()
     #   object.stubs(:expected_method).raises(Exception1).then.raises(Exception2)

@@ -20,6 +20,19 @@ class ExceptionRaiserTest < Test::Unit::TestCase
     exception = assert_raises(exception_class) { raiser.evaluate }
     assert_equal 'message', exception.message
   end
+
+  def test_should_raise_exception_with_multiple_arguments
+    exception_class = Class.new(StandardError)
+    class << exception_class
+      def initialize( message, something )
+        @something = something
+        super( message )
+      end
+    end
+    raiser = ExceptionRaiser.new(exception_class, 'message', 'arb')
+    exception = assert_raises(exception_class) { raiser.evaluate }
+    assert_equal 'message', exception.message
+  end
   
   def test_should_raise_exception_instance
     exception_class = Class.new(StandardError)

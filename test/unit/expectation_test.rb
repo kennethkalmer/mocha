@@ -201,6 +201,20 @@ class ExpectationTest < Test::Unit::TestCase
     actual_exception = assert_raise(exception_klass) { expectation.invoke }
     assert_same expected_exception, actual_exception
   end
+
+  def test_should_raise_exceptions_with_multiple_arguments
+    exception_class = Class.new(StandardError)
+    class << exception_class
+      def initialize( message, something )
+        @something = something
+        super( message )
+      end
+    end
+    expected_exception = exception_class.new
+    expectation = new_expectation.raises(expected_exception)
+    actual_exception = assert_raise(exception_class) { expectation.invoke }
+    assert_same expected_exception, actual_exception
+  end
   
   def test_should_use_the_default_exception_message
     expectation = new_expectation.raises(Exception)
